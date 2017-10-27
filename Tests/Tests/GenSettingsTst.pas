@@ -25,6 +25,13 @@ type
     [TestCase('Test True','True')]
     procedure TestCreateScriptTrue(const Value: Boolean);
 
+    [Test]
+    [TestCase('Test False','False')]
+    procedure TestAmendScriptFalse(const Value: Boolean);
+
+    [Test]
+    [TestCase('Test True','True')]
+    procedure TestAmendScriptTrue(const Value: Boolean);
 
   end;
 
@@ -38,6 +45,22 @@ end;
 procedure TAxosoftIntergrate.TearDown;
 begin
 
+end;
+
+procedure TAxosoftIntergrate.TestAmendScriptFalse(const Value: Boolean);
+var GeneralSettings : IGeneralSettings;
+begin
+ GeneralSettings := TGeneralSettings.Create;
+ GeneralSettings.SetAmendScript(Value);
+  Assert.IsFalse(GeneralSettings.GetAmendScript);
+end;
+
+procedure TAxosoftIntergrate.TestAmendScriptTrue(const Value: Boolean);
+var GeneralSettings : IGeneralSettings;
+begin
+ GeneralSettings := TGeneralSettings.Create;
+ GeneralSettings.SetAmendScript(Value);
+ Assert.IsTrue(GeneralSettings.GetAmendScript);
 end;
 
 procedure TAxosoftIntergrate.TestCreateScriptFalse(const Value: Boolean);
