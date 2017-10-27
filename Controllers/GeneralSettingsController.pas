@@ -7,6 +7,14 @@ uses  GeneralSettingsInt;
 Type
 
   TGeneralSettings = class(TInterfacedObject, IGeneralSettings)
+  protected
+    FCreateScript: Boolean;
+    FAmendScript: Boolean;
+    FCheckDependencies: Boolean;
+    FAllowAlterTable: Boolean;
+    FAllowInsertData: Boolean;
+    FAllowCreateIndexes: Boolean;
+    FIntergrateAxoSoft: Boolean;
   private
     procedure SetCreateScript(const Value: Boolean);
     procedure SetAmendScript(const Value: Boolean);
@@ -39,37 +47,37 @@ implementation
 
 function TGeneralSettings.GetAllowAlterTable: Boolean;
 begin
-  Result := False;
+  Result := FAllowAlterTable;
 end;
 
 function TGeneralSettings.GetAllowCreateIndexes: Boolean;
 begin
-  Result := False;
+  Result := FAllowCreateIndexes;
 end;
 
 function TGeneralSettings.GetAllowInsertData: Boolean;
 begin
-  Result := False;
+  Result := FAllowInsertData;
 end;
 
 function TGeneralSettings.GetAmendScript: Boolean;
 begin
-  Result := False;
+  Result := FAmendScript;
 end;
 
 function TGeneralSettings.GetCheckDependencies: Boolean;
 begin
-  Result := False;
+  Result := FCheckDependencies;
 end;
 
 function TGeneralSettings.GetCreateScript: Boolean;
 begin
-  Result := False;
+  Result := FCreateScript;
 end;
 
 function TGeneralSettings.GetIntergrateAxoSoft: Boolean;
 begin
-  Result := False;
+  Result := FIntergrateAxoSoft;
 end;
 
 function TGeneralSettings.SaveData: Boolean;
@@ -79,37 +87,37 @@ end;
 
 procedure TGeneralSettings.SetAllowAlterTable(const Value: Boolean);
 begin
-//
+  FAllowAlterTable := Value;
 end;
 
 procedure TGeneralSettings.SetAllowCreateIndexes(const Value: Boolean);
 begin
-//
+  FAllowCreateIndexes := Value;
 end;
 
 procedure TGeneralSettings.SetAllowInsertData(const Value: Boolean);
 begin
-//
+  FAllowInsertData := Value;
 end;
 
 procedure TGeneralSettings.SetAmendScript(const Value: Boolean);
 begin
-//
+  FAmendScript := Value;
 end;
 
 procedure TGeneralSettings.SetCheckDependencies(const Value: Boolean);
 begin
-//
+  FCheckDependencies := Value;
 end;
 
 procedure TGeneralSettings.SetCreateScript(const Value: Boolean);
 begin
-//
+  FCreateScript := Value;
 end;
 
 procedure TGeneralSettings.SetIntergrateAxoSoft(const Value: Boolean);
 begin
-//
+  FIntergrateAxoSoft := Value;
 end;
 
 end.
