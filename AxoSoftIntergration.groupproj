@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{49C1374D-CD62-4A4A-9A8A-7A33B50D9EA5}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="AxoSoftInt.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Tests\AxoSoftIntTestHarness.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="AxoSoftInt">
+        <MSBuild Projects="AxoSoftInt.dproj"/>
+    </Target>
+    <Target Name="AxoSoftInt:Clean">
+        <MSBuild Projects="AxoSoftInt.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="AxoSoftInt:Make">
+        <MSBuild Projects="AxoSoftInt.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="AxoSoftIntTestHarness">
+        <MSBuild Projects="Tests\AxoSoftIntTestHarness.dproj"/>
+    </Target>
+    <Target Name="AxoSoftIntTestHarness:Clean">
+        <MSBuild Projects="Tests\AxoSoftIntTestHarness.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="AxoSoftIntTestHarness:Make">
+        <MSBuild Projects="Tests\AxoSoftIntTestHarness.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="AxoSoftInt;AxoSoftIntTestHarness"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="AxoSoftInt:Clean;AxoSoftIntTestHarness:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="AxoSoftInt:Make;AxoSoftIntTestHarness:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
