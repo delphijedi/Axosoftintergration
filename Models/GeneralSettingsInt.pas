@@ -2,6 +2,7 @@ unit GeneralSettingsInt;
 
 interface
 
+uses JSON, JSON.Builders;
 Type
  IGeneralSettings  = Interface(IInterface)
  ['{5076DCCB-184F-4238-9E87-16586FC827F8}']
@@ -20,7 +21,8 @@ Type
   function GetAllowCreateIndexes: Boolean;
   function GetIntergrateAxoSoft: Boolean;
   function SaveData: Boolean;
-
+  function ClearData: Boolean;
+  function CreateGenSettingsJSON: TJSONObject;
  End;
 
 implementation

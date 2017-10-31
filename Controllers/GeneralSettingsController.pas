@@ -2,7 +2,7 @@ unit GeneralSettingsController;
 
 interface
 
-uses  GeneralSettingsInt;
+uses  GeneralSettingsInt, System.sysutils, JSON, JSON.Builders, JSON.Writers, System.Classes;
 
 Type
 
@@ -39,11 +39,42 @@ Type
     property AllowCreateIndexes: Boolean read GetAllowCreateIndexes write SetAllowInsertData;
     property IntegrateAxoSoft: Boolean read GetIntergrateAxoSoft write SetIntergrateAxoSoft;
     function SaveData: Boolean;
+    function ClearData: Boolean;
+    function CreateGenSettingsJSON: TJSONObject;
   end;
 
 implementation
 
 { TGeneralSettings }
+
+function TGeneralSettings.ClearData: Boolean;
+begin
+  result := DeleteFile('GenSettings.json');
+end;
+
+function TGeneralSettings.CreateGenSettingsJSON: TJSONObject;
+var
+  JsonPairs: TJSONObject;
+  JsonObject: TJSONObject;
+  BuilderArray: TJSONArray;
+begin
+  JsonPairs := TJSONObject.Create();
+  JsonPairs.AddPair('CreateScript', Self.CreateScript.ToString());
+  JsonPairs.AddPair('AmendScript', Self.AmendScript.ToString());
+  JsonPairs.AddPair('CheckDependencies', CheckDependencies.ToString());
+  JsonPairs.AddPair('AllowAlterTable', AllowAlterTable.ToString());
+  JsonPairs.AddPair('AllowInsertData', AllowInsertData.ToString());
+  JsonPairs.AddPair('AllowCreateIndexes' ,AllowCreateIndexes.ToString());
+  JsonPairs.AddPair('IntergrateAxoSoft', IntegrateAxoSoft.ToString());
+  BuilderArray := TJSONArray.Create;
+  BuilderArray.Add(JsonPairs);
+  JsonObject := TJSONObject.Create;
+  JsonObject.AddPair('GenSettings', BuilderArray);
+  result := JsonObject;
+
+
+
+end;
 
 function TGeneralSettings.GetAllowAlterTable: Boolean;
 begin
@@ -81,8 +112,22 @@ begin
 end;
 
 function TGeneralSettings.SaveData: Boolean;
+var Builder: TJSONObject;
+    WriteStream: TStringList;
 begin
-  Result := False;
+  Builder := CreateGenSettingsJSON;
+  WriteStream := TStringList.Create;
+  try
+    try
+    WriteStream.Text := Builder.ToString;
+    WriteStream.SaveToFile('GenSettings.json');
+    finally
+      WriteStream.Free;
+    end;
+  except on E: Exception do
+    Result := False;
+  end;
+  Result := True;
 end;
 
 procedure TGeneralSettings.SetAllowAlterTable(const Value: Boolean);
